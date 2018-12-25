@@ -14,7 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "npm install && npm install -g browserify",
     "bundle": "browserify js/schain.js -t localenvify -s sch_module -o js/bundle.js",
-    "deploy": "cp -r img /deploy/img && cp -r js /deploy/js && cp -r css /deploy/css && cp index.html /deploy/index.html"	
+    "deploy": "cp -Tfr img/ /deploy/img/ && cp -Tfr js/ /deploy/js/ && cp -Tfr css/ /deploy/css/ && cp index.html /deploy/index.html"	
   },
   "repository": {
     "type": "git",
