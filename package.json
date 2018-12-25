@@ -12,7 +12,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bundle": "browserify js/schain.js -t localenvify -s sch_module -o js/bundle.js"
+    "bundle": "browserify js/schain.js -t localenvify -s sch_module -o js/bundle.js",
+    "deploy": "cp -r img /deploy/img && cp -r js /deploy/js && cp -r css /deploy/css && cp index.html /deploy/index.html"	
   },
   "repository": {
     "type": "git",
