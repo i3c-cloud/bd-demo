@@ -1,0 +1,330 @@
+:root
+{
+    --sch-color-1: rgb(216, 216, 216);
+    --sch-color-header: white;
+    --sch-padding: 15px;
+    --sch-padding-small: 8px;
+    --sch-menu-width: 250px;
+    --sch-button-padding: 10px;
+
+    --sch-color-primary: rgb(31, 128, 207);
+    --sch-color-primary-alt: rgb(1, 103, 187);
+
+    --sch-color-menu: #394263;
+    --sch-color-menu-alt: #2b3249;
+
+    --sch-color-table: rgb(93, 140, 194);
+    --sch-color-table-alt: rgb(220, 237, 255);
+    --sch-color-table-alt-hover: rgb(179, 215, 253);
+
+    --sch-color-black: rgba(0, 0, 0, 0.7);
+
+    --sch-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    float: left;
+
+    color: var(--sch-color-black);
+}
+
+#sch-container
+{
+    display: flex;
+    flex-direction: column;
+}
+
+body
+{
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+}
+
+#sch-container
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--sch-color-1);
+}
+
+.sch-header
+{
+    padding: var(--sch-padding);
+    background-color: var(--sch-color-header);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.200);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: var(--sch-color-black);
+}
+
+.sch-header *
+{
+    margin: 0;
+}
+
+.sch-header h1
+{
+    font-size: 2em;
+}
+
+.sch-button
+{
+    padding: var(--sch-button-padding);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sch-primary
+{
+    background-color: var(--sch-color-primary);
+    color: white;
+}
+
+.sch-primary:hover
+{
+    background-color: var(--sch-color-primary-alt);
+}
+
+.sch-page-container
+{
+    width: 100%;
+    height: calc(100% - 2em - 2 * var(--sch-padding));
+
+    overflow: auto;
+}
+
+.sch-menu
+{
+    height: 100%;
+    padding: var(--sch-padding);
+
+    background-color: var(--sch-color-menu);
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sch-menu-item
+{
+    color: white !important;
+    padding: var(--sch-padding);
+    width: var(--sch-menu-width);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sch-menu-item:hover
+{
+    transition: 0.5s;
+
+    background-color: var(--sch-color-menu-alt);
+}
+
+.sch-menu-item *
+{
+    color: white;
+}
+
+.sch-menu hr
+{
+    border: 0;
+    border-top: 1px solid white;
+    margin-top: var(--sch-padding);
+    margin-bottom: var(--sch-padding);
+}
+
+.sch-content-container
+{
+    height: 100%;
+    width: calc(100% - var(--sch-menu-width) - 3 * var(--sch-button-padding));
+
+    padding: calc(2 * var(--sch-padding));
+
+    overflow: auto;
+}
+
+.sch-content-pane
+{
+    width: 100%;
+    height: 100%;
+}
+
+.sch-box
+{
+    background-color: white;
+    box-shadow: var(--sch-shadow);
+    padding: var(--sch-padding);
+
+    color: var(--sch-color-black);
+
+    margin-bottom: calc(2 * var(--sch-padding));
+}
+
+.sch-box:last-child
+{
+    margin-bottom: var(--sch-padding) !important;
+}
+
+.sch-full
+{
+    width: 100%;
+}
+
+.sch-wide
+{
+    max-width: 900px;
+    margin-right: calc(100% - 900px);
+}
+
+.sch-box h2
+{
+    margin: 0;
+    margin-top: var(--sch-padding);
+    padding: 0;
+    width: 100%;
+    font-size: 1.2em;
+}
+
+.sch-box h2:first-of-type
+{
+    margin-top: 0;
+}
+
+.sch-box hr
+{
+    margin-top: var(--sch-padding);
+    margin-bottom: var(--sch-padding);
+
+    width: 100%;
+
+    border: 0;
+    border-top: 1px solid var(--sch-color-black);
+}
+
+.sch-control
+{
+    width: 100%;
+    padding: calc(var(--sch-padding) / 2);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+}
+
+.sch-control input
+{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    border-left: 1px solid var(--sch-color-black);
+    border-bottom: 1px solid var(--sch-color-black);
+    border-top: 1px solid var(--sch-color-black);
+    border-right: 0;
+
+    width: 100%;
+}
+
+.sch-control .sch-input-button, .sch-control input
+{
+    padding: var(--sch-padding-small);
+    font-size: 1em;
+
+    height: calc(1em + var(--sch-padding-small) * 2 + 2px);
+}
+
+.sch-control .sch-input-button
+{
+    background-color: var(--sch-color-primary);
+    color: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    line-height: 1em;
+    border-top: 1px solid var(--sch-color-primary-border);
+    border-right: 1px solid var(--sch-color-primary-border);
+    border-bottom: 1px solid var(--sch-color-primary-border);
+
+    cursor: pointer;
+}
+
+.sch-control .sch-input-button:hover
+{
+    background-color: var(--sch-color-primary-alt);
+}
+
+.sch-box table 
+{
+    width: 100%;
+
+    margin-top: var(--sch-padding);
+
+    border-collapse: collapse;
+}
+
+.sch-box table *
+{
+    float: none;
+}
+
+.sch-box table thead
+{
+    background-color: var(--sch-color-table);
+    padding: calc(var(--sch-padding) / 2);
+    width: 100%;
+}
+
+.sch-box table thead tr, .sch-box table tbody tr
+{
+    width: 100%;
+}
+
+.sch-box table tbody tr td, .sch-box table thead tr th
+{
+    padding: calc(var(--sch-padding) / 2);
+    text-align: left;
+}
+
+.sch-box table tbody tr:nth-child(even)
+{
+    background-color: var(--sch-color-table-alt);
+}
+
+.sch-box table th:last-child, .sch-box td:last-child
+{
+    text-align: right;
+}
+
+.sch-box table tbody tr:hover
+{
+    background-color: var(--sch-color-table-alt-hover);
+    cursor: pointer;
+}
+
+.sch-arrow
+{
+    height: 100px;
+    background-image: url('../img/arrow.png');
+    background-repeat: no-repeat;
+}
+
+.sch-box-no-margin
+{
+    margin-bottom: 0;
+}

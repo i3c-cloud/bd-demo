@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="css/sch.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.6.0/js/all.js" crossorigin="anonymous"></script>
+
+    <title>leki.i3c.pl</title>
+</head>
+
+<body>
+
+    <div id="sch-container">
+
+        <!-- This is where our content will be inserted -->
+
+        <div class="sch-header">
+            <h1>⚕ leki.i3c.pl - prototyp</h1>
+            <div class="sch-button sch-primary">{{sChain.currentIdentity.publicKey}}</div>
+        </div>
+
+        <!-- Page container -->
+        <div class="sch-page-container">
+
+            <!-- Menu -->
+            <div class="sch-menu">
+
+                <div class="sch-menu-item" v-on:click="menuClicked('identity')">
+                    <i class="fas fa-user"></i>
+                    <div class="sch-menu-item-link">Identyfikacja</div>
+                </div>
+
+                <hr>
+
+                <div class="sch-menu-item" v-on:click="menuClicked('assets')">
+                        <i class="fas fa-industry"></i>
+                    <div class="sch-menu-item-link">Twoje zasoby</div>
+                </div>
+
+                <div class="sch-menu-item" v-on:click="menuClicked('all-assets')">
+                    <i class="fas fa-biohazard"></i>
+                    <div class="sch-menu-item-link">Zasoby w sieci</div>
+                </div>
+
+            </div>
+
+            <!-- Content container -->
+            <div class="sch-content-container">
+
+
+                <!-- Identity pane -->
+                <div v-if="isActive('identity')" class="sch-content-pane">
+
+                    <div class="sch-box">
+                        <h2>Identyfikacja</h2>
+                        <hr>
+                        <p>To jest prototyp, Twoim identyfikatorem jest para kluczy kryptograficznych definiowana poufnym ciągiem znaków(hasłem).</p>
+                    </div>
+
+                    <div class="sch-box sch-full sch-wide">
+                        <h2>Generowanie identyfikatora</h2>
+                        <hr>
+                        <p>Wprowadź hasło (im dłuższe tym bezpieczniejsze) i wciśnij przycisk "Utwórz" aby wygenerować identyfikator.</p>
+                        <div class="sch-control">
+                        <input v-model="identitySeedInput" type="password">
+                        <div class="sch-input-button" v-on:click="identityButtonClicked()">Utwórz</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Asset pane -->
+                <div v-if="isActive('assets')" class="sch-content-pane">
+
+                    <div class="sch-box">
+                        <h2>Zasoby(leki)</h2>
+                        <hr>
+                        <p>To jest prototyp, zasoby zawarte w transakcjach reprezentują leki w obrocie.</p>
+                    </div>
+
+                    <div class="sch-box sch-full sch-wide">
+                        <h2>Utwórz nowy lek (zasób w sieci "cLeki")</h2>
+                        <p>Wprowadź opis dla zasobu który chcesz utworzyć:</p>
+                        <div class="sch-control">
+                            <input v-model="assetInput" type="text">
+                            <div class="sch-input-button" v-on:click="assetButtonClicked()">Utwórz</div>
+                        </div>
+                        <br>
+                        <h2>Twoje zasoby</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Opis</th>
+                                    <th>ID transakcji</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="asset in assets" v-on:click="transactionClicked(asset.id, true)">
+                                    <td>{{asset.asset.data.item}}</td>
+                                    <td>{{asset.id}}</td>
+                                </tr>
+                                <tr v-if="assets.size == 0">
+                                    <td colspan="2" style="text-align: left">Brak zasobów.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <!-- Transactions pane -->
+                <div v-if="isActive('transactions')" class="sch-content-pane">
+
+                    <div class="sch-box sch-wide">
+                        <h2>Łańcuch transakcji (transaction chain)</h2>
+                        <hr>
+                        <p>Każdy zasób w sieci "cLeki" jest definiowany poprzez łańcuch transakcji z nim powiązanych.</p>
+                        <p></p>
+                    </div>
+
+                    <div class="sch-box sch-wide sch-box-no-margin" v-if="myAssets">
+                        <h2>Uruchom operację dla zasobu: {{activeTransaction.asset.data.item}}</h2>
+                        <p>Wprowadź akcję do wykonania:</p>
+                        <div class="sch-control">
+                            <input type="text" v-model="actionInput">
+                            <div class="sch-input-button" v-on:click="actionButtonClicked()">Uruchom</div>
+                        </div>
+
+                        <h2>LUB</h2>
+
+                        <h2>Transfer zasobu</h2>
+                        <p>Ta operacja jest równoważnikiem transakcji sprzedaży/przekazania zasobu/leku innemu podmiotowi w sieci.</p>
+                        <p>Odbiorca autoryzuje transakcję wpisująć swoje hasło:</p>
+                        <div class="sch-control">
+                            <input type="password" v-model="otherFirmInput">
+                            <div class="sch-input-button" v-on:click="otherFirmButtonClicked()">Przekaż</div>
+                        </div>
+                    </div>
+
+                    <span class="sch-full" v-for="transaction in transactionsForAsset.slice().reverse()">
+                    <div class="sch-arrow sch-full"></div>
+                    <div class="sch-box sch-wide sch-box-no-margin">
+                        <h2>{{transaction.metadata.action}}</h2>
+                        <p>{{new Date(transaction.metadata.date).toLocaleString()}}</p>
+                    </div>
+                    </span>
+                    
+                </div>
+
+                <!-- All assets pane -->
+                <div v-if="isActive('all-assets')" class="sch-content-pane">
+
+                    <div class="sch-box">
+                        <h2>Wszystkie zasoby (leki)</h2>
+                        <hr>
+                        <p>Wszystkie dane w sieci cLeki są widoczne dla operatorów węzłów "master". Zapewnia to (ograniczoną) transparentność obrotu.</p>
+                    </div>
+
+                    <div class="sch-box sch-full">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Opis</th>
+                                    <th>ID transakcji</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="asset of allAssets" v-on:click="transactionClicked(asset.id, false)">
+                                    <td>{{asset.data.item}}</td>
+                                    <td>{{asset.id}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <!-- Our bundled code -->
+    <script src="js/bundle.js"></script>
+
+    <!-- The code linking our webapp to the code we wrote -->
+    <script src="js/sch-web.js"></script>
+
+</body>
+
+</html>

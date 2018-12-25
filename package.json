@@ -1,0 +1,32 @@
+{
+  "name": "bd-demo",
+  "version": "1.0.0",
+  "description": "A demo of cLeki network.",
+  "main": "js/schain.js",
+  "dependencies": {
+    "bigchaindb-driver": "^4.0.0",
+    "bip39": "^2.5.0",
+    "dotenv": "^5.0.1",
+    "localenvify": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle": "browserify js/schain.js -t localenvify -s sch_module -o js/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i3c-cloud/bd-demo.git"
+  },
+  "keywords": [
+    "BigchainDB",
+    "blockchain",
+    "vue.js"
+  ],
+  "author": "Mark Bisz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/i3c-cloud/bd-demo/issues"
+  },
+  "homepage": "https://github.com/i3c-cloud/bd-demo"
+}
